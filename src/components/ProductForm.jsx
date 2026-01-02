@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ProductForm({ setProducts, products }) {
+export default function ProductForm({ products, setProducts, editing, setEditing }) {
   const [form, setForm] = useState({
     name: "",
     price: "",
@@ -10,6 +10,13 @@ export default function ProductForm({ setProducts, products }) {
   });
 
   const [errors, setErrors] = useState({});
+
+  // Load data when editing
+  useEffect(() => {
+    if (editing) {
+      setForm(editing);
+    }
+  }, [editing]);
 
   const validate = () => {
     const e = {};
@@ -24,10 +31,14 @@ export default function ProductForm({ setProducts, products }) {
     const v = validate();
     if (Object.keys(v).length) return setErrors(v);
 
-    setProducts([
-      ...products,
-      { ...form, id: Date.now(), price: Number(form.price) }
-    ]);
+    if (editing) {
+      setProducts(
+        products.map(p => (p.id === editing.id ? { ...form, id: editing.id } : p))
+      );
+      setEditing(null);
+    } else {
+      setProducts([...products, { ...form, id: Date.now(), price: Number(form.price) }]);
+    }
 
     setForm({ name: "", price: "", category: "", stock: "", description: "" });
     setErrors({});
@@ -35,67 +46,35 @@ export default function ProductForm({ setProducts, products }) {
 
   return (
     <form onSubmit={submit}>
+      <div className="form-field">
+        <label>Name <span className="required">*</span></label>
+        <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+        {errors.name && <span className="error">{errors.name}</span>}
+      </div>
 
-  <div className="form-field">
-    <label>
-      Name <span className="required">*</span>
-    </label>
-    <input
-      value={form.name}
-      onChange={e => setForm({ ...form, name: e.target.value })}
-    />
-    {errors.name && <span className="error">{errors.name}</span>}
-  </div>
+      <div className="form-field">
+        <label>Price <span className="required">*</span></label>
+        <input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} />
+        {errors.price && <span className="error">{errors.price}</span>}
+      </div>
 
-  <div className="form-field">
-    <label>
-      Price <span className="required">*</span>
-    </label>
-    <input
-      type="number"
-      value={form.price}
-      onChange={e => setForm({ ...form, price: e.target.value })}
-    />
-    {errors.price && <span className="error">{errors.price}</span>}
-  </div>
+      <div className="form-field">
+        <label>Category <span className="required">*</span></label>
+        <input value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} />
+        {errors.category && <span className="error">{errors.category}</span>}
+      </div>
 
-  <div className="form-field">
-    <label>
-      Category <span className="required">*</span>
-    </label>
-    <input
-      value={form.category}
-      onChange={e => setForm({ ...form, category: e.target.value })}
-    />
-    {errors.category && <span className="error">{errors.category}</span>}
-  </div>
+      <div className="form-field">
+        <label>Stock</label>
+        <input type="number" value={form.stock} onChange={e => setForm({ ...form, stock: e.target.value })} />
+      </div>
 
-  <div className="form-field">
-    <label>Stock <span className="required">*</span> 
-    </label>
-    <input
-      type="number"
-      value={form.stock}
-      onChange={e => setForm({ ...form, stock: e.target.value })}
-    />
-    {errors.category && <span className="error">{errors.category}</span>}
-  </div>
+      <div className="description-section">
+        <label>Description</label>
+        <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
+      </div>
 
-  {/* Description – Full Width */}
-  <div className="description-section">
-    <label>
-      Description(Optional)
-    </label>
-    <textarea
-      value={form.description}
-      onChange={e =>
-        setForm({ ...form, description: e.target.value })
-      }
-    />
-  </div>
-
-  <button>Add Product</button>
-</form>
-
+      <button>{editing ? "Update Product" : "Add Product"}</button>
+    </form>
   );
 }
