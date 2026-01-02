@@ -1,0 +1,350 @@
+/* ========================
+   Design Tokens
+======================== */
+:root {
+  --primary: #4f46e5;
+  --primary-light: #6366f1;
+  --bg: #f4f6fb;
+  --card-bg: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --danger: #ef4444;
+  --border: #e5e7eb;
+  --radius: 14px;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* ========================
+   Reset & Base
+======================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background: linear-gradient(180deg, #eef2ff, var(--bg));
+  color: var(--text);
+}
+
+/* ========================
+   Layout
+======================== */
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 24px 48px;
+}
+
+.content-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ========================
+   Heading
+======================== */
+h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ========================
+   Search Bar
+======================== */
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ========================
+   View Toggle
+======================== */
+.view-toggle {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.view-toggle button {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.view-toggle button.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+/* ========================
+   Product Form (FIXED)
+======================== */
+form {
+  background: var(--card-bg);
+  padding: 24px;
+  border-radius: var(--radius);
+  margin-bottom: 32px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 🔥 FIX */
+  gap: 16px;
+
+  box-shadow: var(--shadow-md);
+}
+
+/* ========================
+   Form Fields
+======================== */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.required {
+  color: var(--danger);
+  margin-left: 4px;
+}
+
+form input,
+form textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+}
+
+form input:focus,
+form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.error {
+  font-size: 12px;
+  color: var(--danger);
+}
+
+/* ========================
+   Description Section (Full Width)
+======================== */
+.description-section {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f8fafc;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+.description-section textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ========================
+   Submit Button
+======================== */
+form button {
+  grid-column: 1 / -1;
+  padding: 14px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+/* ========================
+   Table View (Grid Style)
+======================== */
+.table-container {
+  overflow-x: auto;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;              
+  background: var(--card-bg);
+  border: 1px solid var(--border);         
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.product-table th,
+.product-table td {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 14px;
+  border: 1px solid var(--border);         
+}
+
+.product-table th {
+  background: #eef2ff;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Row hover */
+.product-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.product-table tbody tr:hover {
+  background-color: #f1f5f9;              
+}
+
+
+/* ========================
+   Card View
+======================== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 18px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.card {
+  position: relative;
+  transition: 
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(79, 70, 229, 0.25); /* blue glow */
+}
+
+/* ========================
+   Pagination
+======================== */
+.pagination-wrapper {
+  width: 100%;
+  margin-top: 24px;
+  padding: 16px 0 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination {
+  display: flex;
+  gap: 12px;
+}
+
+.pagination button {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pagination button:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: #fff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.pagination button.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================
+   Responsive Breakpoints
+======================== */
+@media (max-width: 1024px) {
+  form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .view-toggle {
+    flex-direction: column;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  .description-section textarea {
+    min-height: 140px;
+  }
+}
